@@ -9,7 +9,7 @@ import apiService from '@/services/API-service';
 
 export default {
     //组件名
-    name: 'templateApp',
+    name: 'root',
     //实例的数据对象
     data() {
         return {
