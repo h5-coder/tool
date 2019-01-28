@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="com-container">
 
     </div>
 </template>
@@ -59,7 +59,5 @@ export default {
 </script>
 
 <style lang="less">
-    .container{
 
-    }
 </style>

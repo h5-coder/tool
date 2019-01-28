@@ -1,14 +1,18 @@
 <template>
-    <div class="container">
-        {{$t('msg')}}
+    <div>
+        <com-header></com-header>
+        <router-view></router-view>
+        <com-footer></com-footer>
     </div>
 </template>
 
 <script>
+import comHeader from '@/components/header/'
+import comFooter from '@/components/footer/'
 
 export default {
     //组件名
-    name: 'main',
+    name: 'root',
     //实例的数据对象
     data() {
         return {
@@ -39,7 +43,7 @@ export default {
     },
     //组件
     components: {
-
+        comHeader,comFooter
     },
     //监视
     watch: {
@@ -58,7 +62,7 @@ export default {
 </script>
 
 <style lang="less">
-    .container{
-
-    }
+html,body{
+    background: #f6f6f6;
+}
 </style>

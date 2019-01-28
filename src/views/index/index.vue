@@ -1,16 +1,14 @@
 <template>
     <div class="container">
-        <com-header></com-header>
         {{$t('msg')}}
     </div>
 </template>
 
 <script>
-import comHeader from '@/components/header/'
 
 export default {
     //组件名
-    name: 'root',
+    name: 'index',
     //实例的数据对象
     data() {
         return {
@@ -41,7 +39,6 @@ export default {
     },
     //组件
     components: {
-        comHeader
     },
     //监视
     watch: {
