@@ -10,7 +10,7 @@ import Redirect from './map/Redirect'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         Index,//主页
         Color,
