@@ -1,6 +1,6 @@
 <template>
     <div class="com-container">
-        <div class="form-box" :style="{background:color}">
+        <div class="form-box">
             <el-form
                 class="form"
                 @submit.native.prevent
@@ -9,13 +9,28 @@
                 label-width="90px"
             >
                 <el-form-item label="红R(0~255)">
-                    <el-input v-model="form.r"></el-input>
+                    <el-input
+                        type="number"
+                        v-model="form.r"
+                        maxlength="3"
+                        @input="change($event,'r')"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="绿G(0~255)">
-                    <el-input v-model="form.g"></el-input>
+                    <el-input
+                        type="number"
+                        v-model="form.g"
+                        maxlength="3"
+                        @input="change($event,'g')"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="蓝B(0~255)">
-                    <el-input v-model="form.b"></el-input>
+                    <el-input
+                        type="number"
+                        v-model="form.b"
+                        maxlength="3"
+                        @input="change($event,'b')"
+                    ></el-input>
                 </el-form-item>
             </el-form>
             <el-form
@@ -33,9 +48,11 @@
                 </el-form-item>
             </el-form>
         </div>
-        <pre>
-            color:
-            background:rgb()
+        <pre :style="{background:color}">
+            {
+                color: {{form.hex}};
+                background: rgb({{form.rgb}});
+            }
         </pre>
     </div>
 </template>
@@ -50,13 +67,13 @@ export default {
     data() {
         return {
             form: {
-                r: "",
-                g: "",
-                b: "",
-                hex: "#",
-                rgb: ""
+                r: 6,
+                g: 6,
+                b: 6,
+                hex: "#666",
+                rgb: "6,6,6"
             },
-            color:'#fff'
+            color: "#666",
         };
     },
     //数组或对象，用于接收来自父组件的数据
@@ -65,6 +82,23 @@ export default {
     computed: {},
     //方法
     methods: {
+        change(value,type){
+            console.log(value,type)
+            if(!value||value<0){
+                this.form[type]=0
+            }else if(value>255){
+                this.form[type]=255
+            }else{
+                this.form[type]=parseInt(value)
+            }
+            this.setHexAndRgb()
+        },
+        setHexAndRgb(){
+            const {r,g,b}=this.form
+            const hex= this.rgb2Hex(`rgb(${r},${g},${r})`)
+            this.form.hex=hex;
+            this.color=hex;
+        },
         hex2Rgb(hex) {
             //十六进制转为RGB
             let rgb = []; // 定义rgb数组
