@@ -1,63 +1,54 @@
 <template>
     <div class="com-container">
-        敬请期待
+        <el-card class="box-card">
+            <ul class="list">
+                <li>
+                    职业：前端开发工程师
+                </li>
+                <li>
+                    Github:<a href="https://github.com/lovely-man">Github</a>
+                </li>
+            </ul>
+        </el-card>
+
     </div>
 </template>
 
 <script>
-import apiService from '@/services/API-service';
+import apiService from "@/services/API-service";
 
 export default {
     //组件名
-    name: 'about',
+    name: "about",
     //实例的数据对象
     data() {
-        return {
-
-        }
+        return {};
     },
     //数组或对象，用于接收来自父组件的数据
-    props: {
-
-    },
+    props: {},
     //计算
-    computed: {
-
-    },
+    computed: {},
     //方法
-    methods: {
-
-    },
+    methods: {},
     //生命周期函数 请求写在created中
-    created() {
-
-    },
-    beforeMount() {
-
-    },
-    mounted() {
-
-    },
+    created() {},
+    beforeMount() {},
+    mounted() {},
     //组件
-    components: {
-
-    },
+    components: {},
     //监视
-    watch: {
-
-    },
+    watch: {},
     //过滤器
-    filters:{
-
-    },
+    filters: {},
     //自定义指令
-    directive:{
-
-    }
-}
-
+    directive: {}
+};
 </script>
 
 <style lang="less">
-
+.list{
+    >li{
+        padding: 5px;
+    }
+}
 </style>

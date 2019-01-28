@@ -125,6 +125,7 @@ export default {
 .form-box {
     display: flex;
     justify-content: space-around;
+    padding: 22px 0 0;
 }
 .form {
     width: 300px;
