@@ -1,7 +1,10 @@
 <template>
     <div class="com-container">
-        <el-card class="box-card">
+        <el-card>
             <ul class="list">
+                <li>
+                    昵称：踩蘑菇的怪蜀黍
+                </li>
                 <li>
                     职业：前端开发工程师
                 </li>

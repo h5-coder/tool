@@ -1,54 +1,62 @@
 <template>
     <div class="com-container">
-        <div class="form-box">
-            <el-form
-                class="form"
-                @submit.native.prevent
-                ref="form"
-                :model="form"
-                label-width="90px"
-            >
-                <el-form-item label="红R(0~255)">
-                    <el-input
-                        type="number"
-                        v-model="form.r"
-                        maxlength="3"
-                        @input="change($event,'r')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="绿G(0~255)">
-                    <el-input
-                        type="number"
-                        v-model="form.g"
-                        maxlength="3"
-                        @input="change($event,'g')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="蓝B(0~255)">
-                    <el-input
-                        type="number"
-                        v-model="form.b"
-                        maxlength="3"
-                        @input="change($event,'b')"
-                    ></el-input>
-                </el-form-item>
-            </el-form>
-            <el-form
-                class="form"
-                @submit.native.prevent
-                ref="form"
-                :model="form"
-                label-width="90px"
-            >
-                <el-form-item label="16进制">
-                    <el-input v-model="form.hex"></el-input>
-                </el-form-item>
-                <el-form-item label="RGB">
-                    <el-input v-model="form.rgb"></el-input>
-                </el-form-item>
-            </el-form>
-        </div>
-        <pre :style="{background:color}">
+        <el-card>
+            <div class="form-box">
+                <el-form
+                    class="form"
+                    @submit.native.prevent
+                    ref="form"
+                    :model="form"
+                    label-width="90px"
+                >
+                    <el-form-item label="红R(0~255)">
+                        <el-input
+                            type="number"
+                            v-model="form.r"
+                            maxlength="3"
+                            @input="change($event,'r')"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="绿G(0~255)">
+                        <el-input
+                            type="number"
+                            v-model="form.g"
+                            maxlength="3"
+                            @input="change($event,'g')"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="蓝B(0~255)">
+                        <el-input
+                            type="number"
+                            v-model="form.b"
+                            maxlength="3"
+                            @input="change($event,'b')"
+                        ></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-form
+                    class="form"
+                    @submit.native.prevent
+                    ref="form"
+                    :model="form"
+                    label-width="90px"
+                >
+                    <el-form-item label="16进制">
+                        <el-input
+                            v-model="form.hex"
+                            @input="changeHex($event)"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="RGB">
+                        <el-input
+                            v-model="form.rgb"
+                            readonly
+                        ></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </el-card>
+        <pre :style="{background:form.hex}">
             {
                 color: {{form.hex}};
                 background: rgb({{form.rgb}});
@@ -73,7 +81,7 @@ export default {
                 hex: "#666",
                 rgb: "6,6,6"
             },
-            color: "#666",
+            color: "#666"
         };
     },
     //数组或对象，用于接收来自父组件的数据
@@ -82,22 +90,35 @@ export default {
     computed: {},
     //方法
     methods: {
-        change(value,type){
-            console.log(value,type)
-            if(!value||value<0){
-                this.form[type]=0
-            }else if(value>255){
-                this.form[type]=255
-            }else{
-                this.form[type]=parseInt(value)
+        change(value, type) {
+            console.log(value, type);
+            if (!value || value < 0) {
+                this.form[type] = 0;
+            } else if (value > 255) {
+                this.form[type] = 255;
+            } else {
+                this.form[type] = parseInt(value);
             }
-            this.setHexAndRgb()
+            this.setHexAndRgb();
         },
-        setHexAndRgb(){
-            const {r,g,b}=this.form
-            const hex= this.rgb2Hex(`rgb(${r},${g},${r})`)
-            this.form.hex=hex;
-            this.color=hex;
+        changeHex(value) {
+            if (!value) {
+                this.form.hex = "#";
+            }
+            const rgb = this.hex2Rgb(this.form.hex);
+            console.log("rgb", rgb, rgb[0]);
+            // [this.form.r,this.form.g,this.form.b]=rgb
+            this.form.r = rgb[0];
+            this.form.g = rgb[1];
+            this.form.b = rgb[2];
+            console.log(rgb);
+            this.form.rgb = rgb.join(",");
+        },
+        setHexAndRgb() {
+            const { r, g, b } = this.form;
+            const hex = this.rgb2Hex(`rgb(${r},${g},${r})`);
+            this.form.hex = hex;
+            this.form.rgb = r + "," + g + "," + b;
         },
         hex2Rgb(hex) {
             //十六进制转为RGB
@@ -115,10 +136,12 @@ export default {
                 hex.replace(/[0-9A-F]{2}/gi, function(kw) {
                     rgb.push(eval("0x" + kw)); //十六进制转化为十进制并存如数组
                 });
-                return `rgb(${rgb.join(",")})`; //输出RGB格式颜色
+                // return `rgb(${rgb.join(",")})`; //输出RGB格式颜色
+                return rgb;
             } else {
                 console.log(`Input ${hex} is wrong!`);
-                return "rgb(0,0,0)";
+                // return "rgb(0,0,0)";
+                return [0, 0, 0];
             }
         },
         rgb2Hex(rgb) {

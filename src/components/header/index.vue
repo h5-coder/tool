@@ -36,7 +36,7 @@ export default {
     //实例的数据对象
     data() {
         return {
-            activeIndex: "1"
+            activeIndex: "/"
         };
     },
     //数组或对象，用于接收来自父组件的数据
@@ -46,11 +46,14 @@ export default {
     //方法
     methods: {
         handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+            console.log('handleSelect',key, keyPath);
         }
     },
     //生命周期函数 请求写在created中
-    created() {},
+    created() {
+        this.activeIndex=this.$route.path
+        console.log(this.activeIndex,this.$route.path)
+    },
     beforeMount() {},
     mounted() {},
     //组件
