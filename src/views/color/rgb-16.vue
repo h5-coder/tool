@@ -56,12 +56,19 @@
                 </el-form>
             </div>
         </el-card>
-        <pre :style="{background:form.hex}">
-            {
-                color: {{form.hex}};
-                background: rgb({{form.rgb}});
-            }
-        </pre>
+        <el-row  type="flex" justify="space-around">
+            <el-col :span="11">
+                <pre class="pre is-always-shadow">
+{
+    color: {{form.hex}};
+    background: rgb({{form.rgb}});
+}
+                </pre>
+            </el-col>
+            <el-col :span="11">
+                <div :style="{background:form.hex}" class="pre"></div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -104,7 +111,13 @@ export default {
         changeHex(value) {
             if (!value) {
                 this.form.hex = "#";
+            } else if (value[0] != "#") {
+                this.form.hex = "#" + value;
             }
+
+            this.form.hex.length > 7 &&
+                (this.form.hex = this.form.hex.substring(0, 7));
+
             const rgb = this.hex2Rgb(this.form.hex);
             console.log("rgb", rgb, rgb[0]);
             // [this.form.r,this.form.g,this.form.b]=rgb
@@ -186,5 +199,12 @@ export default {
 }
 .form {
     width: 300px;
+}
+.pre{
+    margin: 10px 0;
+    padding: 10px ;
+    height: 70px;
+    border-radius: 4px;
+    background: #fff;
 }
 </style>
